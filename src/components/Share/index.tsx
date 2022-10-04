@@ -9,7 +9,6 @@ import {
   ShareCurrentView,
   ShareProps,
 } from './types';
-import avatar1 from '../../images/avatar-1.svg';
 import { accessTypes } from './data';
 import PersonItem from '../PersonItem';
 import ChipItem from '../ChipItem';
@@ -271,7 +270,7 @@ export default function (props: ShareProps) {
                     key={person.id}
                     id={person.id}
                     name={person.name}
-                    avatarUrl={avatar1}
+                    avatarUrl={person.avatarUrl}
                     accessType={person.accessType as AccessTypeId}
                     handleSelectPerson={handleSelectPerson}
                   />
