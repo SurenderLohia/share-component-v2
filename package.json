@@ -11,7 +11,7 @@
     "storybook": "npm-run-all --parallel watch:css sb",
     "storybook-build": "npm run build:css && npm run sb-build",
     "predeploy": "npm run storybook-build",
-    "deploy-storybook": "gh-pages -d storybook-static"
+    "deploy-storybook": "npm run predeploy && gh-pages -d storybook-static"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",

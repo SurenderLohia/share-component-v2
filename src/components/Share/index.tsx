@@ -40,6 +40,7 @@ export default function (props: ShareProps) {
   const [allPersons, setAllPersons] = useState(persons);
   const [allGroups, setAllGroups] = useState(groups);
   const [selectedAccessType, setSelectedAccessType] = useState('no-access');
+  const [selectedPersonIds, setSelectedPersonIds] = useState<number[]>([]);
 
   // Todo: change access need to implement
 
@@ -60,6 +61,11 @@ export default function (props: ShareProps) {
       setAllGroups(groups);
     }
   }, [searchText]);
+
+  useEffect(() => {
+    const _selectedPersonIds = selectedPersons.map((item) => item.id);
+    setSelectedPersonIds(_selectedPersonIds);
+  }, [selectedPersons]);
 
   const handleShareButtonClick = () => {
     setCurrentView('list');
@@ -230,12 +236,12 @@ export default function (props: ShareProps) {
               </button>
             </div>
           </div>
-          {allPersons.length > 0 && (
+          {allPersons.filter((person) => !selectedPersonIds.includes(person.id))
+            .length > 0 && (
             <div className="pl-6 pr-4 py-4">
               {SectionTitle('Select a person')}
               {allPersons
-                // Todo: need remove selected items from the list
-                //.filter((person: Person) => selectedPersons.includes(person.id))
+                .filter((person) => !selectedPersonIds.includes(person.id))
                 .map((person) => (
                   <PersonItem
                     key={person.id}
@@ -248,18 +254,21 @@ export default function (props: ShareProps) {
                 ))}
             </div>
           )}
-          {allGroups.length > 0 && (
+          {allGroups.filter((person) => !selectedPersonIds.includes(person.id))
+            .length > 0 && (
             <div className="pl-6 pr-4 py-4">
               {SectionTitle('Select a group')}
-              {allGroups.map((person) => (
-                <PersonItem
-                  key={person.id}
-                  id={person.id}
-                  name={person.name}
-                  accessType={person.accessType as AccessTypeId}
-                  handleSelectPerson={handleSelectPerson}
-                />
-              ))}
+              {allGroups
+                .filter((person) => !selectedPersonIds.includes(person.id))
+                .map((person) => (
+                  <PersonItem
+                    key={person.id}
+                    id={person.id}
+                    name={person.name}
+                    accessType={person.accessType as AccessTypeId}
+                    handleSelectPerson={handleSelectPerson}
+                  />
+                ))}
             </div>
           )}
         </div>
