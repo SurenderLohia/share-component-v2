@@ -3,7 +3,7 @@ import './styles/build.css';
 
 import { ShareIcon, GlobeIcon, HelpIcon, LinkIcon } from './Icons';
 import {
-  AccessListItemProps,
+  AccessListItemType,
   AccessTypeId,
   Person,
   ShareCurrentView,
@@ -12,6 +12,7 @@ import {
 import { accessTypes } from './data';
 import PersonItem from '../PersonItem';
 import ChipItem from '../ChipItem';
+import UserAccessListItem from '../UserAccessListItem';
 
 const buttonClass =
   'bg-gray-1000 text-white font-main font-normal py-2 px-4 text-sm rounded flex gap-2 items-center hover:bg-gray-700 mb-1';
@@ -35,39 +36,6 @@ const Footer = (
     </button>
   </div>
 );
-
-const AccessListItem = (props: AccessListItemProps) => {
-  const { name, info, avatarUrl, accessType, handleAccessTypeChange } = props;
-  return (
-    <div className="flex items-center mb-4">
-      <div className="flex">
-        <img src={avatarUrl} alt={name} />
-      </div>
-      <div className="ml-2">
-        <span className="font-main text-base text-gray-900 font-normal">
-          {name}
-        </span>{' '}
-        <br />
-        <span className="font-main text-sm text-gray-500 font-normal">
-          {info}
-        </span>
-      </div>
-      <div className="group relative ml-auto">
-        <select
-          className="p-2 text-xs text-gray-500"
-          onChange={handleAccessTypeChange}
-          value={accessType}
-        >
-          {accessTypes.map((accessType) => (
-            <option key={accessType.id} value={accessType.id}>
-              {accessType.label}
-            </option>
-          ))}
-        </select>
-      </div>
-    </div>
-  );
-};
 
 export default function (props: ShareProps) {
   const { persons, groups, userAccessList } = props;
@@ -155,6 +123,16 @@ export default function (props: ShareProps) {
     setSelectedAccessType(e.target.value);
   };
 
+  const handleUserAccessListItemAccessTypeChange = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+    user: AccessListItemType
+  ) => {
+    // Make api call
+    console.log({ user });
+    console.log(`accessType: ${e.target.value}`);
+    setSelectedAccessType(e.target.value);
+  };
+
   return (
     <div className="share-container">
       {currentView === 'share-button' && (
@@ -207,12 +185,15 @@ export default function (props: ShareProps) {
               </span>
             </div>
             {userAccessList.map((item) => (
-              <AccessListItem
+              <UserAccessListItem
+                key={item.name}
                 name={item.name}
                 info={item.info}
                 avatarUrl={item.avatarUrl}
                 accessType={item.accessType as AccessTypeId}
-                handleAccessTypeChange={handleAccessTypeChange}
+                handleAccessTypeChange={(e) =>
+                  handleUserAccessListItemAccessTypeChange(e, item)
+                }
               />
             ))}
           </div>
@@ -226,7 +207,7 @@ export default function (props: ShareProps) {
           <div className="flex px-3 py-3 bg-gray-50 rounded-t-lg items-center">
             <div onClick={handleRemovePerson}>
               {selectedPersons.map((person) => (
-                <ChipItem text={person.name} id={person.id} />
+                <ChipItem key={person.name} text={person.name} id={person.id} />
               ))}
             </div>
 

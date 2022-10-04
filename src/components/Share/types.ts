@@ -8,7 +8,7 @@ export type AccessListItemType = {
 }
 
 export type AccessListItemProps = AccessListItemType & {
-  handleAccessTypeChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  handleAccessTypeChange: (e: React.ChangeEvent<HTMLSelectElement>, user: AccessListItemType) => void;
 }
 
 export type AccessType = {
