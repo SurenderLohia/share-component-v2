@@ -1,5 +1,16 @@
 export type AccessTypeId = 'full-access' | 'can-edit' | 'can-view' | 'no-access';
 
+export type AccessListItemType = {
+  name: string,
+  info: string,
+  avatarUrl: string,
+  accessType: AccessTypeId
+}
+
+export type AccessListItemProps = AccessListItemType & {
+  handleAccessTypeChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+}
+
 export type AccessType = {
   id: AccessTypeId,
   label: string
@@ -23,7 +34,8 @@ export type PersonItemProps = {
 
 export type ShareProps = {
   persons: Person[],
-  groups: Person[]
+  groups: Person[],
+  userAccessList: AccessListItemType[]
 }
 
 export type AvatarProps = {

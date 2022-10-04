@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './styles/build.css';
 
-import { ShareIcon, GlobeIcon, ThumbLogo, HelpIcon, LinkIcon } from './Icons';
-import { AccessTypeId, Person, ShareCurrentView, ShareProps } from './types';
+import { ShareIcon, GlobeIcon, HelpIcon, LinkIcon } from './Icons';
+import {
+  AccessListItemProps,
+  AccessTypeId,
+  Person,
+  ShareCurrentView,
+  ShareProps,
+} from './types';
 import avatar1 from '../../images/avatar-1.svg';
 import { accessTypes } from './data';
 import PersonItem from '../PersonItem';
@@ -31,8 +37,41 @@ const Footer = (
   </div>
 );
 
+const AccessListItem = (props: AccessListItemProps) => {
+  const { name, info, avatarUrl, accessType, handleAccessTypeChange } = props;
+  return (
+    <div className="flex items-center mb-4">
+      <div className="flex">
+        <img src={avatarUrl} alt={name} />
+      </div>
+      <div className="ml-2">
+        <span className="font-main text-base text-gray-900 font-normal">
+          {name}
+        </span>{' '}
+        <br />
+        <span className="font-main text-sm text-gray-500 font-normal">
+          {info}
+        </span>
+      </div>
+      <div className="group relative ml-auto">
+        <select
+          className="p-2 text-xs text-gray-500"
+          onChange={handleAccessTypeChange}
+          value={accessType}
+        >
+          {accessTypes.map((accessType) => (
+            <option key={accessType.id} value={accessType.id}>
+              {accessType.label}
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
+  );
+};
+
 export default function (props: ShareProps) {
-  const { persons, groups } = props;
+  const { persons, groups, userAccessList } = props;
   const [currentView, setCurrentView] =
     useState<ShareCurrentView>('share-button');
   const [selectedPersons, setSelectedPersons] = useState<Person[]>([]);
@@ -168,32 +207,17 @@ export default function (props: ShareProps) {
                 Invite
               </span>
             </div>
-            <div className="flex items-center">
-              <div className="flex">{ThumbLogo}</div>
-              <div className="ml-2">
-                <span className="font-main text-base text-gray-900 font-normal">
-                  Everyone at OSlash
-                </span>{' '}
-                <br />
-                <span className="font-main text-sm text-gray-500 font-normal">
-                  25 workspace members
-                </span>
-              </div>
-              <div className="group relative ml-auto">
-                <select
-                  className="p-2 text-xs text-gray-500"
-                  onChange={handleAccessTypeChange}
-                  value={selectedAccessType}
-                >
-                  {accessTypes.map((accessType) => (
-                    <option key={accessType.id} value={accessType.id}>
-                      {accessType.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
+            {userAccessList.map((item) => (
+              <AccessListItem
+                name={item.name}
+                info={item.info}
+                avatarUrl={item.avatarUrl}
+                accessType={item.accessType as AccessTypeId}
+                handleAccessTypeChange={handleAccessTypeChange}
+              />
+            ))}
           </div>
+
           {Footer}
         </div>
       )}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { groups, persons } from './../components/Share/data';
 import Share from './../components/Share';
+import { persons, groups, userAccessList } from './data';
 
 export default {
   title: 'Share',
@@ -14,4 +14,5 @@ export const Default = Template.bind({});
 Default.args = {
   persons,
   groups,
+  userAccessList,
 };
