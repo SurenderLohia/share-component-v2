@@ -1,6 +1,8 @@
 # Share component
 
-[Demo](https://www.loom.com/share/b3f87d794a7e4ecf84dc7326a5ac871d)
+[Demo Video](https://www.loom.com/share/b3f87d794a7e4ecf84dc7326a5ac871d)
+
+[Live url](https://share-component.surge.sh/)
 
 ### How to run
 
@@ -13,13 +15,13 @@
 In terminal, in project root directory run below command
 
 ```
-yarn install
+npm install
 ```
 
 ### To run development mode
 
 ```
-yarn run dev
+npm run storybook
 ```
 
 ### View the storybook in browser
@@ -27,7 +29,7 @@ yarn run dev
 In browser navigate to the below url
 
 ```
-http://localhost:8080/
+http://localhost:6006/
 ```
 
 ### Tech Stack
@@ -35,12 +37,12 @@ http://localhost:8080/
 - HTML, CSS, JavaScript
 - React, Typescript
 - Tailwindcss
+- Project created by using [vite](https://vitejs.dev/)
+- Deployed on [surge.sh](https://surge.sh/)
 
 ### Todo List:
 
 Not fully completed the below features due to time constrains
 
-1. Once selected the person, then selected person should be removed the from the persons list
-2. Person selection selected item style
-3. When multiple persons added, need to handle UI
-4. Add Independent All Components in storybook
+1. Person selection selected item style
+2. When multiple persons added, need to handle UI
