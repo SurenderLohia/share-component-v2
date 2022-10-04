@@ -9,9 +9,7 @@
     "build:css": "npx tailwindcss -i src/style.css -o src/build.css",
     "watch:css": "onchange src/components/**/*.tsx -- npm run build:css",
     "storybook": "npm-run-all --parallel watch:css sb",
-    "storybook-build": "npm run build:css && npm run sb-build",
-    "predeploy": "npm run storybook-build",
-    "deploy-storybook": "npm run predeploy && gh-pages -d storybook-static"
+    "storybook-build": "npm run build:css && npm run sb-build"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
